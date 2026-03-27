@@ -85,3 +85,16 @@ router.put('/:id', (req, res) => {
     res.json({ message: 'Note saved!' })
 
 });
+
+//DELETE /api/notes/:id
+router.delete('/:id',(req, res) => {
+    const note = db.prepare('SELECT * FROM notes WHERE id = ?').run(req.params.id);
+    if (!note){
+        return res.status(404).json({ error: 'Note not found!'})
+    }
+
+    db.prepare('DELETE FROM notes WHERE id = ?')run(req.params.id);
+    res.json({ message: 'Note deleted!'});
+});
+
+module.exports = router;
