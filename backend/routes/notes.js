@@ -49,3 +49,39 @@ router.post('/', (req, res) => {
     res.status(201).json(newNote);
 });
 
+// PUT /api/notes/:id
+//Body : { title, blocks: [{ type, content, position}] }
+//Replaces all blocks for the note (simplest update strategy)
+router.put('/:id', (req, res) => {
+    const { title, blocks } = req.body;
+    const noteId = req.params.id;
+
+    const note = db.prepare('SELECT * FROM notes WHERE id = ?').get(noteId);
+    if (!note) {
+        return res.status(404).json({ error: 'Note not found!' });
+    }
+
+    //Use a transaction so all updates succeed or none do
+    const saveNote = db.transaction(() => {
+        //Update the note title and updated_at timestamp
+        db.prepare(
+            "UPDATE notes SET title = ?, updated_at = datetime('now') WHERE id = ?"
+        ).run(title, noteId);
+
+        //Delete old blocks and re-insert - simple and reliable
+        db.prepare('DELETE FROM blocks WHERE note_id = ?').run(noteId);
+
+        //Insert each block with its position
+        const insertBlock = db.prepare(
+            'INSERT INTO blocks (note_id, type, content, position) VALUES (?, ?, ?, ?)'
+        );
+        blocks.forEach((block, insex) => {
+            insertBlock.run(noteId, block.type, block.content, index);
+        });
+
+    });
+
+    saveNote();//runs whole transaction at once
+    res.json({ message: 'Note saved!' })
+
+});
