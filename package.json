@@ -21,6 +21,7 @@
     "better-sqlite3": "^12.8.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "file-type": "^22.0.0",
     "multer": "^2.1.1"
   }
 }
