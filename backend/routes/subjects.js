@@ -12,12 +12,12 @@ router.get('/', (req, res) => {
 //POST /api/subjects
 //Body: { name, parent_id} parent_id is optional - omit for top level
 
-router.post('/',(req,res) => {
-    const {name, parent_id} = req.body;
+router.post('/', (req, res) => {
+    const { name, parent_id } = req.body;
 
-    if (!name || name.trim() == ''){
-        return res.status(400).json({ error: 'Subject name is required!'});
-    }    
+    if (!name || name.trim() == '') {
+        return res.status(400).json({ error: 'Subject name is required!' });
+    }
 
     //Insert values to database
     const result = db.prepare(
@@ -31,15 +31,15 @@ router.post('/',(req,res) => {
 
 //DELETE /api/subjects/:id
 //Deletes subject and all its children/notes (cascade handles this in database)
-router.delete('/:id',(req, res) => {
+router.delete('/:id', (req, res) => {
     const subject = db.prepare('SELECT * FROM subjects WHERE id = ?').get(req.params.id);
 
-    if (!subject){
-        return res.status(404).json({ error: 'Subject not found!'});
+    if (!subject) {
+        return res.status(404).json({ error: 'Subject not found!' });
     }
 
     db.prepare('DELETE FROM subjects WHERE id = ?').run(req.params.id);
-    res.json({ message: 'Subject deleted!'})
+    res.json({ message: 'Subject deleted!' })
 
 });
 
