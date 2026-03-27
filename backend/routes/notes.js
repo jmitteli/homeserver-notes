@@ -82,7 +82,7 @@ router.put('/:id', (req, res) => {
     });
 
     saveNote();//runs whole transaction at once
-    res.json({ message: 'Note saved!' })
+    res.json({ message: 'Note saved!' });
 
 });
 
@@ -90,10 +90,10 @@ router.put('/:id', (req, res) => {
 router.delete('/:id',(req, res) => {
     const note = db.prepare('SELECT * FROM notes WHERE id = ?').run(req.params.id);
     if (!note){
-        return res.status(404).json({ error: 'Note not found!'})
+        return res.status(404).json({ error: 'Note not found!'});
     }
 
-    db.prepare('DELETE FROM notes WHERE id = ?')run(req.params.id);
+    db.prepare('DELETE FROM notes WHERE id = ?').run(req.params.id);
     res.json({ message: 'Note deleted!'});
 });
 
