@@ -15,8 +15,8 @@ const getSubjects = async () => {
 const createSubject = async (name, parentId = null) => {
     const response = await fetch(`${API_URL}/subjects`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({name, parent_id:parentId})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, parent_id: parentId })
     });
     return response.json();
 };
@@ -48,8 +48,8 @@ const getNote = async (id) => {
 const createNote = async (subjectId, title) => {
     const response = await fetch(`${API_URL}/notes`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({title, blocks})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, blocks })
     });
 };
 
@@ -58,8 +58,8 @@ const createNote = async (subjectId, title) => {
 const saveNote = async (id, title, blocks) => {
     const response = await fetch(`${API_URL}/notes/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({title, blocks})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, blocks })
     });
     return response.json();
 };
@@ -91,5 +91,5 @@ const uploadImage = async (file) => {
 
 //Build the full URL for displaying an uploaded image
 const getImageUrl = (filename) => {
-    retunr `http://localhost:3000/uploads/${filename}`;
+    retunr`http://localhost:3000/uploads/${filename}`;
 };
