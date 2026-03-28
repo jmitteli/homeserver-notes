@@ -148,6 +148,52 @@ const handleSelectSubject = (subjectId) => {
     onSubjectSelected(subjectId);           //notify main.js to load notes
 };
 
-//Called when + button is clicked on a subject row (child subject)
+//Called when + button is clicked in the sidebar header (top-level subject)
+//or from the addRootSubjectBtn in index.html
+const handleAddRootSubject = async () => {
+    const name = prompt('Subject name:');
+    if (!name || name.trim() === '') return;
 
+    await createSubject(name.trim(), null);
+    renderTree();
+};
+
+
+//Called when + button is clicked on a subject row (child subject)
+const handleAddSubject = async (parentId) => {
+    const name = prompt('Sub-subject name: ');
+    if (!name || name.trim() === '') return;
+
+    //Auto-expand the parent so the new child is visible
+    expandedSubjects.add(parentId);
+
+    await createSubject(name.trim(), parentId);
+    renderTree();
+};
+
+//called when x button is clicked on a subject row
+const handleDeleteSubject = async (id, name) => {
+    const confirmed = confirm(
+        `Delete "${name}"?\n\nThis will also delete all sub-subjects and notes inside them!`
+    );
+    if (!confirmed)return;
+
+    await deleteSubject(id);
+
+    //If the deleted subject was selected, clear the selection
+    if (selectedSubjectId === id) {
+        selectedSubjectId = null;
+        onSubjectSelected(null);
+    }
+
+    renderTree();
+
+};
+
+
+//-----------------------------Init-----------------------------------------
+
+//Wire up the + button in the sidebar header
+document.getElementById('addRootSubjectBtn')
+    .addEventListener('click', handleAddRootSubject);
 
