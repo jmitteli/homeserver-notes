@@ -200,4 +200,65 @@ body{
     
 }
 
+/*--------------------HTML elements end here---------------------------------------------------------*/
+
+/*--------------------JS dynamic elements start here-------------------------------------------------*/
+.subject-row{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-top: 0.4rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.4rem;
+    cursor: pointer;
+    border-radius: 0.25;
+    color: #ccc;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.subject-row:hover{
+    background-color: #2a2a2a;
+}
+
+.subject-row--selected{
+    background-color: #3a3a3a;
+    color: white;
+}
+
+.subject-arrow{
+    font-size: 0.7rem;
+    width: 0.75rem;
+    flex-shrink: 0;
+    color: #666;
+}
+
+.subject-name{
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Action buttons hidden by default, shown on row hover */
+.subject-actions{
+    display: none;
+    gap: 0.25rem;
+    margin-left: auto;
+}
+
+.subject-row:hover .subject-actions{
+    display: flex;
+}
+
+/* Red tint for the delete button */
+.btn-icon--danger{
+    color: #e05555 !important;
+    font-size: 0.8rem !important;
+}
+
+.btn-icon--danger:hover{
+    color: #ff6666 !important;
+}
+
 
