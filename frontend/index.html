@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <title>Notes</title>
+</head>
+
+<body>
+
+    <header class="banner">
+        <div class="banner-inner">
+            <span class="banner-title">📓 Notes</span>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span>Subjects</span>
+                <button class="btn-icon" id="addRootSubjectBtn" title="Add subject">+</button>
+            </div>
+            <div class="subject-tree" id="subjectTree"></div>
+        </aside>
+
+
+        <main class="main-area">
+
+            <div class="notes-panel" id="notes-panel">
+                <div class="notes-panel-header">
+                    <span id="notesPanelTitle">Select a subject</span>
+                    <button class="btn-icon" id="addNoteBtn" title="Add note" style="display:none;">+</button>
+                </div>
+
+                <div class="notes-list" id="notes-list"></div>
+            </div>
+
+            <div class="editor-panel" id="editor-panel" style="display: none;">
+                <div class="editor-header">
+                    <button class="btn-text" id="backBtn">← Back</button>
+                    <input type="text" class="note-title-input" id="noteTitleInput" placeholder="Note title" />
+                    <button class="btn-primary" id="saveNoteBtn">Save</button>
+                </div>
+                <div class="editor-body" id="editorBody"></div>
+
+                <div class="add-block-bar">
+                    <span>Add block:</span>
+                    <button class="btn-block" data-type="text">Text</button>
+                    <button class="btn-block" data-type="header">Header</button>
+                    <button class="btn-block" data-type="code">Code</button>
+                    <button class="btn-block" data-type="image">Image</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="src/js/api.js"></script>
+    <script src="src/js/tree.js"></script>
+    <script src="src/js/editor.js"></script>
+    <script src="src/js/main.js"></script>
+
+</body>
+</html>
