@@ -122,7 +122,7 @@ const createBlockContent = (block, index) => {
             const container = document.createElement('div');
             container.classList.add('block-image-container');
 
-            if (block.content){
+            if (block.content) {
                 //Image allready uploaded - show it
                 const img = document.createElement('img');
                 img.classList.add('block-image');
@@ -136,7 +136,7 @@ const createBlockContent = (block, index) => {
                 replaceBtn.textContent = 'Replace image';
                 replaceBtn.addEventListener('click', () => triggerImageUpload(index));
                 container.appendChild(replaceBtn);
-            }else{
+            } else {
                 //No image yet - show upload button
                 const uploadBtn = document.createElement('button');
                 uploadBtn.classList.add('btn-block');
@@ -172,7 +172,7 @@ const triggerImageUpload = (blockIndex) => {
 
         const result = await uploadImage(file);
 
-        if (result.error){
+        if (result.error) {
             alert(`Upload failed: ${result.error}`);
             return;
         }
@@ -185,9 +185,61 @@ const triggerImageUpload = (blockIndex) => {
     fileInput.click();//open file picker dialog
 };
 
+//------------------Block management--------------------------------------------------------//
+
+//Adds new empty block of the given type at the end
+const addBlock = (type) => {
+    currentBlocks.push({ type, content: ''});
+    renderEditor();
+};
+
+//Moves a block up(-1) or down(+1) in the list
+const moveBlock = (index, direction) => {
+    const newIndex = index + direction;
+
+    //Ignore if already at the top or bottom
+    if (newIndex < 0 || newIndex >= currentBlocks.length) return ;
+
+    //Swap the two blocks
+    const temp = currentBlocks[index];
+    currentBlocks[index] = currentBlocks[newIndex];
+    currentBlocks[newIndex] = temp;
+
+    renderEditor();
+};
+
+//Removes a block at the given index
+const deleteBlock = (index) => {
+    currentBlocks.splice(index, 1);
+    renderEditor();
+};
+
+//-----------------------------Public interface--------------------------------------------------//
+//These functions are called from the main.js
+
+//Loads a note's block into the editor
+const loadBlocks = (blocks) => {
+    currentBlocks = blocks.map(block =>({
+        type: block.type,
+        content: block.content
+    }));
+    renderEditor();
+};
+
+//Returns the current blocks array for saving
+const getBlocks = () => currentBlocks;
+
+//Clears the editor
+const clearEditor = () => {
+    currentBlocks = [];
+    renderEditor();
+};
+
+//---------------------Init---------------------------------------------------------------------------//
 
 
-
-
-
+//Wire up the add block buttons in the toolbar
+document.querySelectorAll('.btn-block[data-type]').forEach(btn => {
+    btn.addEventListener('click', () => addBlock(btn.CDATA_SECTION_NODE.type));
+});
 
