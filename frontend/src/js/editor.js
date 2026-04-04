@@ -157,6 +157,35 @@ const createBlockContent = (block, index) => {
 };
 
 
+//--------------------Image upload-----------------------------------------------
+
+//Opens hidden file input to let the user pick and image
+const triggerImageUpload = (blockIndex) => {
+    //Create temporary hidden file input
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/jpeg,image/png,image/gif,image/webp';
+
+    fileInput.addEventListener('change', async () => {
+        const file = fileInput.files(0);
+        if (!file) return;
+
+        const result = await uploadImage(file);
+
+        if (result.error){
+            alert(`Upload failed: ${result.error}`);
+            return;
+        }
+
+        //Store just the filename in the block, not the full URL
+        currentBlocks[blockIndex].content = result.filename;
+        renderEditor();//Rerender to show the reuploaded image
+    });
+
+    fileInput.click();//open file picker dialog
+};
+
+
 
 
 
