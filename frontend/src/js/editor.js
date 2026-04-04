@@ -39,6 +39,30 @@ const createBlockElement = (block, index) => {
     moveDownBtn.textContent = '↓';
     moveDownBtn.addEventListener('click', () => moveBlock(index, 1));
 
+    //Delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('btn-icon', 'btn-icon--danger');
+    deleteBtn.title = 'Delete block';
+    deleteBtn.textContent = 'x';
+    deleteBtn.addEventListener('click', () => deleteBlock(index));
+
+    controls.appendChild(moveUpBtn);
+    controls.appendChild(moveDownBtn);
+    controls.appendChild(deleteBtn);
+    wrapper.appendChild(controls);
+
+    //Block content based on type
+    const content = createBlockContent(block, index);
+    wrapper.appendChild(content);
+
+    retunr wrapper;
+
+};
 
 
-}
+
+
+
+
+
+
